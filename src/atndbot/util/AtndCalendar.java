@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AtndCalendar {
 
-	public static List<String> getYYYYMMList(int months) {
+	private static List<String> getYYYYMMList(int months) {
 		List<String> yyyymmList = new ArrayList<String>();
 		
 		Calendar now = Calendar.getInstance();
@@ -32,6 +32,14 @@ public class AtndCalendar {
 		return yyyymmList;
 	}
 	
+	public static String getYYYYMMString(int months) {
+		String yyyymmStr = "";
+		for (String yyyymm : getYYYYMMList(months)) {
+			yyyymmStr += (yyyymm + ",");
+		}
+		return yyyymmStr.substring(0, yyyymmStr.length() - 1);
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -40,6 +48,8 @@ public class AtndCalendar {
 		for (String yyyymm : yyyymmList) {
 			System.out.println(yyyymm);
 		}
+		
+		System.out.println(getYYYYMMString(3));
 	}
 
 }
