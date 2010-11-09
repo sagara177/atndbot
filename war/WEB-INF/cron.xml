@@ -4,5 +4,6 @@
     <url>/cronTaskHandler</url>
     <description>atndbot tasks</description>
     <schedule>every 1 hours synchronized</schedule>
+    <timezone>Asia/Tokyo</timezone>
   </cron>
 </cronentries>
