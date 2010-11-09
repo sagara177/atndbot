@@ -1,13 +1,36 @@
 package atndbot;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.logging.Logger;
+
 import javax.servlet.http.*;
+
+import atndbot.model.Event;
+import atndbot.util.AtndCalendar;
 
 @SuppressWarnings("serial")
 public class AtndbotServlet extends HttpServlet {
+	private static Logger logger = 
+        Logger.getLogger(AtndbotServlet.class.getName());
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello, world");
+		long start = System.currentTimeMillis();
+		
+		resp.setContentType("text/plain; charset=utf-8");
+		// resp.getWriter().println("Hello, world");
+		
+		// fetch 1 months event data
+		List<String> yyyymmddList = AtndCalendar.getYYYYMMDDList(30);
+		
+		// debug: fetch only today
+		List<Event> eventList = AtndParser.getEventList(yyyymmddList.get(0));
+		for (Event event : eventList) {
+			resp.getWriter().println(event);
+		}
+		
+		long end = System.currentTimeMillis();
+		logger.info("Timings: " + (end - start) + " ms");
 	}
 }

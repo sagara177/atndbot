@@ -5,51 +5,58 @@ import java.util.Calendar;
 import java.util.List;
 
 public class AtndCalendar {
-
-	private static List<String> getYYYYMMList(int months) {
-		List<String> yyyymmList = new ArrayList<String>();
-		
-		Calendar now = Calendar.getInstance();
-		int year = now.get(Calendar.YEAR);
-		int month = now.get(Calendar.MONTH);
-		
-		for (int i = 0; i < months; i++) {
-			// Calendar.MONTH starts 0, ends 11
-			if (month < 12) {
-				String y = String.format("%04d", year);
-				String m = String.format("%02d", month + 1);
-				yyyymmList.add(y + m);
-			}
-			else {
-				// 201013 == 201101
-				String y = String.format("%04d", year + 1);
-				String m = String.format("%02d", month - 12 + 1);
-				yyyymmList.add(y + m);
-			}
-			month++;
-		}
-		
-		return yyyymmList;
+	/**
+	 * return comma separated YYYYMMDD string.
+	 * date start from today to parameter 'days' future
+	 * 
+	 * example; 20101103,20101104,20101105,...
+	 * 
+	 * @param days range
+	 * @return comma separated YYYYMMDD string
+	 */
+	public static String getYYYYMMDDString(int days) {
+		return concat(getYYYYMMDDList(days));
 	}
 	
-	public static String getYYYYMMString(int months) {
-		String yyyymmStr = "";
-		for (String yyyymm : getYYYYMMList(months)) {
-			yyyymmStr += (yyyymm + ",");
+	/**
+	 * return YYYYMMDD string list.
+	 * date start from today to parameter 'days' future
+	 * 
+	 * example; "20101103", "20101104", "20101105",...
+	 * 
+	 * @param days range
+	 * @return comma separated YYYYMMDD string
+	 */
+	public static List<String> getYYYYMMDDList(int days) {
+		List<String> yyyymmddList = new ArrayList<String>();
+		Calendar cal = Calendar.getInstance();
+		for (int i = 0; i < days; i++) {
+			yyyymmddList.add(getYYYYMMDD(cal));
+			cal.add(Calendar.DATE, 1);
 		}
-		return yyyymmStr.substring(0, yyyymmStr.length() - 1);
+		return yyyymmddList;	
+	}
+	
+	private static String concat(List<String> strList) {
+		String ret = "";
+		for (String s : strList) {
+			ret += (s + ",");
+		}
+		return ret.substring(0, ret.length() - 1);
+	}
+	
+	private static String getYYYYMMDD(Calendar cal) {
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int date = cal.get(Calendar.DATE);
+		return String.format("%04d%02d%02d", year, month + 1, date);
 	}
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		List<String> yyyymmList = AtndCalendar.getYYYYMMList(3);
-		for (String yyyymm : yyyymmList) {
-			System.out.println(yyyymm);
-		}
-		
-		System.out.println(getYYYYMMString(3));
+		System.out.println(getYYYYMMDDString(30));
 	}
 
 }

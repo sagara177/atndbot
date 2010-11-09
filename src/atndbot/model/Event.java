@@ -156,4 +156,9 @@ public class Event {
 	public void setUpdated_at(Date updatedAt) {
 		updated_at = updatedAt;
 	}
+
+	@Override
+	public String toString() {
+		return title + ", " + started_at + ", " + event_url;
+	}
 }

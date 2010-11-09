@@ -18,21 +18,26 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import atndbot.model.Event;
-import atndbot.util.AtndCalendar;
+import atndbot.util.EventFactory;
 
 public class AtndParser {
 	@SuppressWarnings("unused")
 	private static Logger logger = 
         Logger.getLogger(AtndParser.class.getName());
 
-	public static List<Event> getEventList() {
+	/**
+	 * fetch event data, parameter date
+	 * 
+	 * @param yyyymmdd
+	 * @return
+	 */
+	public static List<Event> getEventList(String yyyymmdd) {
 		List<Event> eventList = new ArrayList<Event>();
 		
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath xPath = factory.newXPath();
 		
-		// fetch 3 months event data
-		String yyyymm = AtndCalendar.getYYYYMMString(1);
+		// fetch event data
 		int start = 0;
 		int results_returned = 100;
 		while (results_returned == 100) {
@@ -41,7 +46,7 @@ public class AtndParser {
 			NodeList hash = null;
 			NodeList events = null;
 			try {
-				url = new URL("http://api.atnd.org/events/?ym=" + yyyymm +
+				url = new URL("http://api.atnd.org/events/?ymd=" + yyyymmdd +
 						"&start=" + start + "&count=100");
 				// logger.info("fetch: " + url);
 				is = new InputSource(url.openStream());
@@ -73,10 +78,7 @@ public class AtndParser {
 					info.put("updated_at", xPath.evaluate("updated_at", event));
 					Event e = EventFactory.getEvent(info);
 					eventList.add(e);
-
-					String eventTitle = xPath.evaluate("title", event);
-					String eventStarted_at = xPath.evaluate("started_at", event);
-					System.out.println(eventTitle + ", " + eventStarted_at);
+					// logger.info(e.toString());
 				}
 				
 				// update results_returned, and increment start position
@@ -97,6 +99,7 @@ public class AtndParser {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		getEventList();
+		// fetch 1 months event data
+		getEventList("20101103");
 	}
 }

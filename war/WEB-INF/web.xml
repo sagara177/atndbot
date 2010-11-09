@@ -14,11 +14,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>cronTaskHandler</servlet-name>
-		<servlet-class>atndbot.cronTaskHandler</servlet-class>
+		<servlet-name>CronTaskHandler</servlet-name>
+		<servlet-class>atndbot.CronTaskHandler</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>cronTaskHandler</servlet-name>
+		<servlet-name>CronTaskHandler</servlet-name>
 		<url-pattern>/cronTaskHandler</url-pattern>
 	</servlet-mapping>
 	
