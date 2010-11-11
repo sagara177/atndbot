@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import atndbot.model.Event;
 import atndbot.util.AtndCalendar;
-import atndbot.util.AtndParser;
+import atndbot.util.AtndFetch;
 
 @SuppressWarnings("serial")
 public class AtndbotServlet extends HttpServlet {
@@ -26,7 +28,7 @@ public class AtndbotServlet extends HttpServlet {
 		List<String> yyyymmddList = AtndCalendar.getYYYYMMDDList(30);
 		
 		// debug: fetch only today
-		List<Event> eventList = AtndParser.getEventList(yyyymmddList.get(0));
+		List<Event> eventList = AtndFetch.getEventList(yyyymmddList.get(0));
 		for (Event event : eventList) {
 			resp.getWriter().println(event);
 		}

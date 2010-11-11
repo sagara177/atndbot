@@ -2,6 +2,7 @@ package atndbot.util;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AtndCalendar {
@@ -45,11 +46,27 @@ public class AtndCalendar {
 		return ret.substring(0, ret.length() - 1);
 	}
 	
-	private static String getYYYYMMDD(Calendar cal) {
-		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH);
-		int date = cal.get(Calendar.DATE);
+	private static String getYYYYMMDD(final Calendar cal) {
+		// JST needs to add 9 hours
+		Calendar c = (Calendar) cal.clone();
+		c.add(Calendar.HOUR, 9);
+		
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int date = c.get(Calendar.DATE);
 		return String.format("%04d%02d%02d", year, month + 1, date);
+	}
+	
+	/**
+	 * get YYYYMMDD string from java.util.Date object.
+	 * 
+	 * @param date 
+	 * @return YYYYMMDD string
+	 */
+	public static String getYYYYMMDD(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return getYYYYMMDD(cal);
 	}
 	
 	/**

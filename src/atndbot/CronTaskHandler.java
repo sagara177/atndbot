@@ -27,7 +27,7 @@ public class CronTaskHandler extends HttpServlet {
 		List<String> yyyymmddList = AtndCalendar.getYYYYMMDDList(30 * 2);
 		
 		// set task queue
-		Queue queue = QueueFactory.getDefaultQueue();
+		Queue queue = QueueFactory.getQueue("atnd-event-fetch-queue");
 		
 		for (String yyyymmdd : yyyymmddList) {
 			queue.add(url("/atndFetchHandler").param("yyyymmdd", yyyymmdd));

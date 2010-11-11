@@ -33,6 +33,9 @@ public class Event {
     private Date started_at;
 
     @Persistent 
+    private Date ended_at;
+
+    @Persistent 
     private int limit;
     
     @Persistent 
@@ -99,6 +102,14 @@ public class Event {
 
 	public void setStarted_at(Date startedAt) {
 		started_at = startedAt;
+	}
+
+	public Date getEnded_at() {
+		return ended_at;
+	}
+
+	public void setEnded_at(Date endedAt) {
+		ended_at = endedAt;
 	}
 
 	public int getLimit() {
