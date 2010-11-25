@@ -1,7 +1,9 @@
 package atndbot.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -12,15 +14,19 @@ import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Event {
-    @PrimaryKey
+public class Event implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Long id;
 
 	@Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private String title;
 
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private String titleCatch;
 
     @Persistent 
@@ -33,27 +39,35 @@ public class Event {
     private Date started_at;
 
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private Date ended_at;
 
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private int limit;
     
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private String address;
     
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private String place;
     
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private GeoPt lat_lon;
     
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private int accepted;
     
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private int waiting;
     
     @Persistent 
+	@Extension(vendorName = "datanucleus", key = "gae.unindexed", value="true")
     private Date updated_at;
     
     public Long getId() {

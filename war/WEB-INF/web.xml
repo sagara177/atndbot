@@ -4,6 +4,7 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<!--
 	<servlet>
 		<servlet-name>Atndbot</servlet-name>
 		<servlet-class>atndbot.AtndbotServlet</servlet-class>
@@ -12,6 +13,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>Atndbot</servlet-name>
 		<url-pattern>/atndbot</url-pattern>
 	</servlet-mapping>
+	-->
 	
 	<servlet>
 		<servlet-name>CronTaskHandler</servlet-name>
@@ -32,6 +34,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>TwitterBotHandler</servlet-name>
+		<servlet-class>atndbot.TwitterBotHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TwitterBotHandler</servlet-name>
+		<url-pattern>/twitterBotHandler</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>EventDeleteHandler</servlet-name>
 		<servlet-class>atndbot.util.datastore.EventDeleteHandler</servlet-class>
 	</servlet>
@@ -40,7 +51,37 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/eventDeleteHandler</url-pattern>
 	</servlet-mapping>
 	
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/cronTaskHandler</url-pattern>
+			<url-pattern>/atndFetchHandler</url-pattern>
+			<url-pattern>/twitterBotHandler</url-pattern>
+			<url-pattern>/eventDeleteHandler</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+	
+	<context-param>
+		<param-name>consumerKey</param-name>
+		<param-value>********************</param-value>
+	</context-param>
+	<context-param>
+		<param-name>consumerSecret</param-name>
+		<param-value>****************************************</param-value>
+	</context-param>
+	<context-param>
+		<param-name>accessToken</param-name>
+		<param-value>**************************************************</param-value>
+	</context-param>
+	<context-param>
+		<param-name>accessTokenSecret</param-name>
+		<param-value>****************************************</param-value>
+	</context-param>
+	
 </web-app>

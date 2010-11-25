@@ -46,7 +46,7 @@ public class AtndCalendar {
 		return ret.substring(0, ret.length() - 1);
 	}
 	
-	private static String getYYYYMMDD(final Calendar cal) {
+	private static String getYYYYMMDD(final Calendar cal, String format) {
 		// JST needs to add 9 hours
 		Calendar c = (Calendar) cal.clone();
 		c.add(Calendar.HOUR, 9);
@@ -54,7 +54,11 @@ public class AtndCalendar {
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH);
 		int date = c.get(Calendar.DATE);
-		return String.format("%04d%02d%02d", year, month + 1, date);
+		return String.format(format, year, month + 1, date);
+	}
+	
+	private static String getYYYYMMDD(final Calendar cal) {
+		return getYYYYMMDD(cal, "%04d%02d%02d");
 	}
 	
 	/**
@@ -67,6 +71,18 @@ public class AtndCalendar {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		return getYYYYMMDD(cal);
+	}
+	
+	/**
+	 * get YYYY/MM/DD string from java.util.Date object.
+	 * 
+	 * @param date 
+	 * @return YYYY/MM/DD string
+	 */
+	public static String getYYYYMMDDwithSlash(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return getYYYYMMDD(cal, "%04d/%02d/%02d");
 	}
 	
 	/**
