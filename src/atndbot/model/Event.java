@@ -199,6 +199,21 @@ public class Event implements Serializable {
 	}
 	
 	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Event) {
+			Event that = (Event) obj;
+			if (getId().equals(that.getId()))
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return getId().intValue();
+	}
+
+	@Override
 	public String toString() {
 		return title + ", " + started_at + ", " + event_url;
 	}
