@@ -181,7 +181,23 @@ public class Event implements Serializable {
 	public void setUpdated_at(Date updatedAt) {
 		updated_at = updatedAt;
 	}
-
+	
+	public void update(Event newData) {
+		setTitle(newData.getTitle());
+		setTitleCatch(newData.getTitleCatch());
+		setDescription(newData.getDescription());
+		setEvent_url(newData.getEvent_url());
+		setStarted_at(newData.getStarted_at());
+		setEnded_at(newData.getEnded_at());
+		setLimit(newData.getLimit());
+		setAddress(newData.getAddress());
+		setPlace(newData.getPlace());
+		setLat_lon(newData.getLat_lon());
+		setAccepted(newData.getAccepted());
+		setWaiting(newData.getWaiting());
+		setUpdated_at(newData.getUpdated_at());
+	}
+	
 	@Override
 	public String toString() {
 		return title + ", " + started_at + ", " + event_url;

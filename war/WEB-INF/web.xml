@@ -34,6 +34,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>CronTodayHandler</servlet-name>
+		<servlet-class>atndbot.CronTodayHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CronTodayHandler</servlet-name>
+		<url-pattern>/cronTodayHandler</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>TwitterBotHandler</servlet-name>
 		<servlet-class>atndbot.TwitterBotHandler</servlet-class>
 	</servlet>

@@ -23,6 +23,7 @@ import com.google.appengine.api.labs.taskqueue.Queue;
 import com.google.appengine.api.labs.taskqueue.QueueFactory;
 
 import atndbot.model.Event;
+import atndbot.twitter.EventType;
 import atndbot.util.AtndFetch;
 import atndbot.util.PMF;
 
@@ -46,11 +47,10 @@ public class AtndFetchHandler extends HttpServlet {
 			List<Event> eventList = AtndFetch.getEventList(yyyymmdd);
 			List<Event> newList = new ArrayList<Event>();
 			
-			// persistent new event
+			// persistent new and/or update event
 			for (Event event : eventList) {
-				if (idSet.contains(event.getId()))
-					continue;
-				newList.add(event);
+				if (!idSet.contains(event.getId()))
+					newList.add(event);
 				pm.makePersistent(event);
 			}
 	    	logger.info(String.format(
@@ -58,12 +58,13 @@ public class AtndFetchHandler extends HttpServlet {
 	    			eventList.size(), newList.size(), yyyymmdd));
 			
 	    	// no new event, quit this handler.
-	    	// if (newList.size() == 0)
-	    	// 	return;
+	    	if (newList.size() == 0)
+	    	 	return;
 	    	
 	    	// make payload data only new event
 	    	ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	    	ObjectOutputStream oos = new ObjectOutputStream(bos);
+	    	oos.writeObject(EventType.NEW_EVENT);
 	    	oos.writeObject(getEventIdList(newList));
 	    	oos.close();
 	    	

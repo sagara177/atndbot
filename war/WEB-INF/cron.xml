@@ -2,8 +2,14 @@
 <cronentries>
   <cron>
     <url>/cronTaskHandler</url>
-    <description>atndbot tasks</description>
+    <description>atndbot fetch new</description>
     <schedule>every 1 hours synchronized</schedule>
+    <timezone>Asia/Tokyo</timezone>
+  </cron>
+  <cron>
+    <url>/cronTodayHandler</url>
+    <description>atndbot fetch today</description>
+    <schedule>every day 07:00</schedule>
     <timezone>Asia/Tokyo</timezone>
   </cron>
 </cronentries>

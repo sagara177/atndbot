@@ -8,8 +8,14 @@
     <rate>1/m</rate>
   </queue>
   <queue>
-    <name>atnd-event-tweet-queue</name>
-    <rate>1/m</rate>
+    <name>atnd-event-tweet-queue</name>    
+    <!--
+      twitter oauth api limit is 350/h, so
+      'atnd-event-tweet-queue' planned
+      5/m * 60 minutes + 50 bucket < 350
+    -->
+    <rate>5/m</rate>
+    <bucket-size>50</bucket-size>
   </queue>
   <!--
   <queue>
