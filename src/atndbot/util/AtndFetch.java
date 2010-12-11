@@ -79,8 +79,12 @@ public class AtndFetch {
 					Event e = EventFactory.getEvent(info);
 
 					// atnd's multiple day event is mostly spam
-					if (EventFilter.isOneDayEvent(e, yyyymmdd))
-						eventList.add(e);
+					if (!EventFilter.isOneDayEvent(e, yyyymmdd))
+						continue;
+					// exclude yesterday started event
+					if (!EventFilter.isStartToday(e, yyyymmdd))
+						continue;
+					eventList.add(e);
 					// logger.info(e.toString());
 				}
 				
@@ -103,6 +107,8 @@ public class AtndFetch {
 	
 	public static void main(String[] args) throws Exception {
 		// fetch 1 day event data
-		getEventList("20101103");
+		for (Event e : getEventList("20101218")) {
+			System.out.println(e);
+		}
 	}
 }

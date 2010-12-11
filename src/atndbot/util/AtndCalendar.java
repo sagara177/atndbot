@@ -1,5 +1,7 @@
 package atndbot.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,10 +88,57 @@ public class AtndCalendar {
 	}
 	
 	/**
+	 * get 'YYYY/MM/DD 00:00:00' date object from YYYYMMDD string.
+	 * 
+	 * @param YYYYMMDD string 
+	 * @return 'YYYY/MM/DD 00:00:00' date object
+	 */
+	public static Date getDate(String yyyymmdd) {
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		sdf.applyPattern("yyyyMMdd");
+		Date date = null;
+		try {
+			date = sdf.parse(yyyymmdd);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+	
+	/**
+	 * get utc 'YYYY/MM/(DD - 1) 15:00:00' date object
+	 * from jst 'YYYY/MM/DD 00:00:00' date object
+	 * 
+	 * @param jst 'YYYY/MM/DD 00:00:00' date object
+	 * @return utc 'YYYY/MM/(DD - 1) 15:00:00' date object
+	 */
+	public static Date jstToUtc(final Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.HOUR, -9);
+		return cal.getTime();
+	}
+	
+	/**
+	 * get 'next date' date object from date one.
+	 * 
+	 * @param 'YYYY/MM/DD 00:00:00' date object
+	 * @return 'YYYY/MM/(DD + 1) 00:00:00' date object
+	 */
+	public static Date getNext(final Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, 1);
+		return cal.getTime();
+	}
+	
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		System.out.println(getYYYYMMDDString(30));
+		System.out.println(getDate("20101205"));
+		System.out.println(getNext(getDate("20101205")));
 	}
 
 }

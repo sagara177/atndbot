@@ -9,7 +9,7 @@
   <cron>
     <url>/cronTodayHandler</url>
     <description>atndbot fetch today</description>
-    <schedule>every day 07:00</schedule>
+    <schedule>every day 04:00</schedule>
     <timezone>Asia/Tokyo</timezone>
   </cron>
 </cronentries>
